@@ -11,6 +11,17 @@ class ListaDobleEnlazada:
         self.cola = None
         self.tamanio = 0
 
+    def __iter__(self):
+        self._actual = self.cabeza
+        return self
+
+    def __next__(self):
+        if self._actual is None:
+            raise StopIteration
+        dato = self._actual.dato
+        self._actual = self._actual.siguiente
+        return dato
+
     def tamanio(self):
 
         return self.tamanio
@@ -100,7 +111,7 @@ class ListaDobleEnlazada:
 
 
         # Si no se proporciona una posición, eliminar el último elemento
-        if posicion is None:
+        if posicion is None or posicion == -1:
             dato = self.cola.dato
             # Si hay solo un nodo en la lista
             if self.cabeza == self.cola:
@@ -158,3 +169,42 @@ class ListaDobleEnlazada:
             actual = actual.anterior
    
         self.cabeza, self.cola = self.cola, self.cabeza
+
+
+    def concatenar(self, otra_lista):
+        nueva_lista = self.copiar()
+    
+        actual = otra_lista.cabeza
+        while actual != None:
+            nueva_lista.agregar_al_final(actual.dato)  
+            actual = actual.siguiente
+
+        return nueva_lista
+    
+    def __add__(self, otra_lista):
+        return self.concatenar(otra_lista)
+
+
+alberto = ListaDobleEnlazada()
+diego = ListaDobleEnlazada()
+alberto.agregar_al_final(85)
+alberto.agregar_al_final(75)
+alberto.agregar_al_final(55)
+alberto.agregar_al_final(35)
+diego.agregar_al_final(8)
+diego.agregar_al_final(43)
+diego.agregar_al_final(56)
+diego.agregar_al_final(33)
+
+diegoalberto = alberto.concatenar(diego)
+
+print(diegoalberto)
+actual = diegoalberto.cabeza
+while actual != None:
+    print(actual.dato)
+    actual = actual.siguiente
+
+
+
+
+
