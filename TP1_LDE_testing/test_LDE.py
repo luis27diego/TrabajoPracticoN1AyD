@@ -4,7 +4,12 @@ Created on Thu Sep  1 14:00:21 2022
 @author: Catedra de Algoritmos y Estructura de Datos
 """
 
+<<<<<<< HEAD
 from main import ListaDobleEnlazada
+=======
+from main import ListaDobleEnlazada 
+
+>>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 import unittest
 import random
 
@@ -261,7 +266,7 @@ class Test_LDE(unittest.TestCase):
         de los límites de la LDE. Compruebo las excepciones
         """
         # LDE vacía
-        self.assertRaises(Exception, self.lde_1.extraer,
+        self.assertRaises(Exception, self.lde_1.extraer(),
                           "Extraer de una lista vacia deberia arrojar un error")
         self.assertRaises(Exception, self.lde_1.extraer, 0,
                           "Extraer de una lista vacia deberia arrojar un error")

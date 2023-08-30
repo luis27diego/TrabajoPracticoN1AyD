@@ -5,31 +5,17 @@ class Nodo:
         self.anterior = None
 
 
-class ListaDobleEnlazada:
+class ListaDoblementeEnlazada:
     def __init__(self):
         self.cabeza = None
         self.cola = None
-        self.tamanio = 0
+        self.size = 0
 
-    def __iter__(self):
-        self._actual = self.cabeza
-        return self
-
-    def __next__(self):
-        if self._actual is None:
-            raise StopIteration
-        dato = self._actual.dato
-        self._actual = self._actual.siguiente
-        return dato
-
-    def tamanio(self):
-
-        return self.tamanio
 
     def esta_vacia(self):
-        return self.tamanio == 0
+        return self.size == 0
    
-    def agregar_al_inicio(self, dato):
+    def insertar_al_principio(self, dato):
         nuevo_nodo = Nodo(dato)
         if self.esta_vacia():
             self.cabeza = nuevo_nodo
@@ -38,9 +24,9 @@ class ListaDobleEnlazada:
             nuevo_nodo.siguiente = self.cabeza
             self.cabeza.anterior = nuevo_nodo
             self.cabeza = nuevo_nodo
-        self.tamanio += 1
+        self.size += 1
    
-    def agregar_al_final(self,dato):
+    def insertar_al_final(self,dato):
         nuevo_nodo = Nodo(dato)
         if self.esta_vacia():
             self.cabeza = nuevo_nodo
@@ -49,19 +35,14 @@ class ListaDobleEnlazada:
             nuevo_nodo.anterior = self.cola
             self.cola.siguiente = nuevo_nodo
             self.cola  = nuevo_nodo
-        self.tamanio += 1
+        self.size += 1
            
-    def __len__(self):
-        return self.tamanio
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
    
-    def insertar(self,dato,posicion = None):
+    def agregar(self,dato,posicion = None):
         nuevo_nodo = Nodo(dato)
 
 
@@ -70,7 +51,7 @@ class ListaDobleEnlazada:
             self.cola = nuevo_nodo
 
 
-        elif posicion is None or posicion >= self.tamanio:
+        elif posicion is None or posicion >= self.size:
             nuevo_nodo.anterior = self.cola
             self.cola.siguiente = nuevo_nodo
             self.cola = nuevo_nodo
@@ -90,37 +71,32 @@ class ListaDobleEnlazada:
             nuevo_nodo.anterior = actual
             actual.siguiente.anterior = nuevo_nodo
             actual.siguiente = nuevo_nodo
-        self.tamanio += 1
+        self.size += 1
 
 
 
 
     def copiar(self):
-        nuevalista = ListaDobleEnlazada()
+        nuevalista = ListaDoblementeEnlazada()
         actual = self.cabeza
 
 
         while actual !=None:
-            nuevalista.insertar(actual.dato)
+            nuevalista.agregar(actual.dato)
             actual = actual.siguiente
        
         return nuevalista
 
 
-    def extraer(self, posicion=None):
+    def eliminar(self, posicion=None):
         # Verificar si la lista está vacía
-<<<<<<< HEAD
-        if self.tamanio == 0:
-            raise ValueError()
-=======
         if not self.cabeza:
             return None
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
         # Si no se proporciona una posición, eliminar el último elemento
-        if posicion is None or posicion == -1:
-            dato = self.cola.dato
+        if posicion is None:
+           
             # Si hay solo un nodo en la lista
             if self.cabeza == self.cola:
                 self.cabeza = None
@@ -128,18 +104,14 @@ class ListaDobleEnlazada:
             else:
                 self.cola = self.cola.anterior
                 self.cola.siguiente = None
-            self.tamanio -= 1
-            
-            return dato
+            self.size -= 1
+            dato = self.cola.dato
+            return print(dato)
 
 
         # Verificar si la posición es inválida
-        if posicion < 0 or posicion >= self.tamanio:
-<<<<<<< HEAD
-            raise ValueError()
-=======
+        if posicion < 0 or posicion >= self.size:
             return None
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
         # Eliminar el primer nodo
@@ -167,7 +139,7 @@ class ListaDobleEnlazada:
                 actual.siguiente.anterior = actual.anterior
        
         # Reducir el tamaño de la lista
-        self.tamanio -= 1
+        self.size -= 1
         return dato
 
 
@@ -183,64 +155,36 @@ class ListaDobleEnlazada:
         self.cabeza, self.cola = self.cola, self.cabeza
 
 
-    def concatenar(self, otra_lista):
-<<<<<<< HEAD
-        
-        
-        lista = otra_lista.copiar()
-        self.cola.siguiente = lista.cabeza
-        lista.cabeza.anterior = self.cola
-        self.cola = lista.cola
-
-        self.tamanio += lista.tamanio
-
-        
-    
-    def __add__(self,lista):
-        lista_e = ListaDobleEnlazada()
-        nodo_a = self.cabeza
-
-        while nodo_a != None:
-            lista_e.agregar_al_final(nodo_a.dato)
-            nodo_a = nodo_a.siguiente
-
-        lista_e.concatenar(lista) 
-        return lista_e
-=======
-        nueva_lista = self.copiar()
-    
-        actual = otra_lista.cabeza
-        while actual != None:
-            nueva_lista.agregar_al_final(actual.dato)  
-            actual = actual.siguiente
-
-        return nueva_lista
-    
-    def __add__(self, otra_lista):
-        return self.concatenar(otra_lista)
 
 
-alberto = ListaDobleEnlazada()
-diego = ListaDobleEnlazada()
-alberto.agregar_al_final(85)
-alberto.agregar_al_final(75)
-alberto.agregar_al_final(55)
-alberto.agregar_al_final(35)
-diego.agregar_al_final(8)
-diego.agregar_al_final(43)
-diego.agregar_al_final(56)
-diego.agregar_al_final(33)
-
-diegoalberto = alberto.concatenar(diego)
-
-print(diegoalberto)
-actual = diegoalberto.cabeza
-while actual != None:
-    print(actual.dato)
-    actual = actual.siguiente
 
 
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
+
+
+listonga = ListaDoblementeEnlazada()
+listonga.insertar_al_principio(5)
+listonga.insertar_al_principio(10)
+listonga.insertar_al_principio(70)
+listonga.agregar(900,1)
+listonga.eliminar(1)
+
+
+
+
+print(listonga.cabeza.dato)
+print(listonga.cabeza.siguiente.dato)
+print(listonga.cola.dato)
+print
+
+
+
+print(listonga.cabeza.dato)
+print(listonga.cabeza.siguiente.dato)
+print(listonga.cola.dato)
+print
+
+print(listonga.primero)
+print(listonga.ultimo)
 
