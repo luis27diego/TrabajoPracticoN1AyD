@@ -55,11 +55,6 @@ class ListaDobleEnlazada:
         return self.tamanio
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
    
     def insertar(self,dato,posicion = None):
         nuevo_nodo = Nodo(dato)
@@ -109,13 +104,8 @@ class ListaDobleEnlazada:
 
     def extraer(self, posicion=None):
         # Verificar si la lista está vacía
-<<<<<<< HEAD
         if self.tamanio == 0:
             raise ValueError()
-=======
-        if not self.cabeza:
-            return None
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
         # Si no se proporciona una posición, eliminar el último elemento
@@ -135,11 +125,7 @@ class ListaDobleEnlazada:
 
         # Verificar si la posición es inválida
         if posicion < 0 or posicion >= self.tamanio:
-<<<<<<< HEAD
             raise ValueError()
-=======
-            return None
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
         # Eliminar el primer nodo
@@ -184,7 +170,6 @@ class ListaDobleEnlazada:
 
 
     def concatenar(self, otra_lista):
-<<<<<<< HEAD
         
         
         lista = otra_lista.copiar()
@@ -206,41 +191,6 @@ class ListaDobleEnlazada:
 
         lista_e.concatenar(lista) 
         return lista_e
-=======
-        nueva_lista = self.copiar()
-    
-        actual = otra_lista.cabeza
-        while actual != None:
-            nueva_lista.agregar_al_final(actual.dato)  
-            actual = actual.siguiente
-
-        return nueva_lista
-    
-    def __add__(self, otra_lista):
-        return self.concatenar(otra_lista)
-
-
-alberto = ListaDobleEnlazada()
-diego = ListaDobleEnlazada()
-alberto.agregar_al_final(85)
-alberto.agregar_al_final(75)
-alberto.agregar_al_final(55)
-alberto.agregar_al_final(35)
-diego.agregar_al_final(8)
-diego.agregar_al_final(43)
-diego.agregar_al_final(56)
-diego.agregar_al_final(33)
-
-diegoalberto = alberto.concatenar(diego)
-
-print(diegoalberto)
-actual = diegoalberto.cabeza
-while actual != None:
-    print(actual.dato)
-    actual = actual.siguiente
-
-
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 
 
 

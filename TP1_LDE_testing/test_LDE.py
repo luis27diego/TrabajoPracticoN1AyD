@@ -4,12 +4,7 @@ Created on Thu Sep  1 14:00:21 2022
 @author: Catedra de Algoritmos y Estructura de Datos
 """
 
-<<<<<<< HEAD
 from main import ListaDobleEnlazada
-=======
-from main import ListaDobleEnlazada 
-
->>>>>>> 051533b9127cbb504c1f71cb668238050d6931af
 import unittest
 import random
 
