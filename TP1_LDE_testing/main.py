@@ -189,3 +189,11 @@ class ListaDobleEnlazada:
 
         lista_e.concatenar(lista) 
         return lista_e
+
+
+        while nodo_a != None:
+            lista_e.agregar_al_final(nodo_a.dato)
+            nodo_a = nodo_a.siguiente
+
+        lista_e.concatenar(lista) 
+        return lista_e
