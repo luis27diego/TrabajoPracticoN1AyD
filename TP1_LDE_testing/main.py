@@ -55,8 +55,6 @@ class ListaDobleEnlazada:
         return self.tamanio
 
 
-
-
    
     def insertar(self,dato,posicion = None):
         nuevo_nodo = Nodo(dato)
@@ -106,10 +104,9 @@ class ListaDobleEnlazada:
 
     def extraer(self, posicion=None):
         # Verificar si la lista está vacía
-        if not self.cabeza:
-            return None
-
-
+        if self.tamanio == 0:
+            raise ValueError("Extraer de una lista vacía debería arrojar un error")
+        
         # Si no se proporciona una posición, eliminar el último elemento
         if posicion is None or posicion == -1:
             dato = self.cola.dato
@@ -127,8 +124,7 @@ class ListaDobleEnlazada:
 
         # Verificar si la posición es inválida
         if posicion < 0 or posicion >= self.tamanio:
-            return None
-
+            raise ValueError("La posición especificada está fuera de los límites de la lista")
 
         # Eliminar el primer nodo
         if posicion == 0:
@@ -172,39 +168,24 @@ class ListaDobleEnlazada:
 
 
     def concatenar(self, otra_lista):
-        nueva_lista = self.copiar()
+        
+        
+        lista = otra_lista.copiar()
+        self.cola.siguiente = lista.cabeza
+        lista.cabeza.anterior = self.cola
+        self.cola = lista.cola
+
+        self.tamanio += lista.tamanio
+
+        
     
-        actual = otra_lista.cabeza
-        while actual != None:
-            nueva_lista.agregar_al_final(actual.dato)  
-            actual = actual.siguiente
+    def __add__(self,lista):
+        lista_e = ListaDobleEnlazada()
+        nodo_a = self.cabeza
 
-        return nueva_lista
-    
-    def __add__(self, otra_lista):
-        return self.concatenar(otra_lista)
+        while nodo_a != None:
+            lista_e.agregar_al_final(nodo_a.dato)
+            nodo_a = nodo_a.siguiente
 
-
-alberto = ListaDobleEnlazada()
-diego = ListaDobleEnlazada()
-alberto.agregar_al_final(85)
-alberto.agregar_al_final(75)
-alberto.agregar_al_final(55)
-alberto.agregar_al_final(35)
-diego.agregar_al_final(8)
-diego.agregar_al_final(43)
-diego.agregar_al_final(56)
-diego.agregar_al_final(33)
-
-diegoalberto = alberto.concatenar(diego)
-
-print(diegoalberto)
-actual = diegoalberto.cabeza
-while actual != None:
-    print(actual.dato)
-    actual = actual.siguiente
-
-
-
-
-
+        lista_e.concatenar(lista) 
+        return lista_e
