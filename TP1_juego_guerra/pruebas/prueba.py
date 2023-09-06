@@ -3,7 +3,7 @@ import random
 
 valores = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 palos = ['♠', '♥', '♦', '♣']
-
+     
 class Carta:
     def __init__(self, valor, palo):
         self.valor = valor
@@ -15,23 +15,55 @@ class Carta:
             return 'X'
         else:
             return f'{self.valor}{self.palo}'
+        
+class Mazo:
+    def __init__(self):
+        self.mazo = []
+        self.jugador_1 = ListaDobleEnlazada()
+        self.jugador_2 = ListaDobleEnlazada()
+
+        for valor in valores:
+            for palo in palos:
+                self.mazo.append(Carta(valor,palo))
+    
+        random.shuffle(self.mazo)
+        
+        def pasador(self):
+            lista = ListaDobleEnlazada()
+            for carta in self.mazo:
+                lista.agregar_al_final(carta)
+            self.mazo = lista
+
+        pasador(self)
+        
+        def repartir(self):
+            for _ in range(26):
+                carta1 = self.mazo.extraer(0)
+                carta2 = self.mazo.extraer(0)
+                self.jugador_1.agregar_al_final(carta1)
+                self.jugador_2.agregar_al_final(carta2)
+
+        repartir(self)
+        
+
+    
+    def poner_arriba():
+        pass
+        
+
+        
+
+
 
 class JuegoGuerra:
     def __init__(self, semilla=None):
         self.turnos = 0
         self.max_turnos = 10000
-        self.mazo_jugador1 = self.crear_mazo()
-        self.mazo_jugador2 = self.crear_mazo()
+        self.mazo_jugador1 = Mazo.jugador
+        self.mazo_jugador2 = Mazo.jugador
         self.mesa = ListaDobleEnlazada()
         random.seed(semilla)
 
-    def crear_mazo(self):
-        mazo = [Carta(valor, palo) for valor in valores for palo in palos]
-        random.shuffle(mazo)
-        lista = ListaDobleEnlazada()
-        for carta in mazo:
-            lista.agregar_al_final(carta)
-        return lista
 
     def jugar_turno(self):
         if self.turnos >= self.max_turnos:
