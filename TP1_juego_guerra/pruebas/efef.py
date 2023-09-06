@@ -105,7 +105,7 @@ class ListaDobleEnlazada:
     def extraer(self, posicion=None):
         # Verificar si la lista está vacía
         if self.tamanio == 0:
-            raise ValueError("Extraer de una lista vacia deberia extraer error")
+            raise ValueError("Extraer de una lista vacía debería arrojar un error")
         
         # Si no se proporciona una posición, eliminar el último elemento
         if posicion is None or posicion == -1:
@@ -124,7 +124,7 @@ class ListaDobleEnlazada:
 
         # Verificar si la posición es inválida
         if posicion < 0 or posicion >= self.tamanio:
-            raise IndexError("La posición especificada está fuera de los límites de la lista")
+            raise ValueError("La posición especificada está fuera de los límites de la lista")
 
         # Eliminar el primer nodo
         if posicion == 0:
@@ -190,3 +190,58 @@ class ListaDobleEnlazada:
         lista_e.concatenar(lista) 
         return lista_e
 
+
+        while nodo_a != None:
+            lista_e.agregar_al_final(nodo_a.dato)
+            nodo_a = nodo_a.siguiente
+
+        lista_e.concatenar(lista) 
+        return lista_e
+
+import random
+
+valores = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+palos = ['♠', '♥', '♦', '♣']
+
+class Carta:
+    def __init__(self, valor, palo):
+        self.valor = valor
+        self.palo = palo
+        self.boca_abajo = True
+
+    def __str__(self):
+        if self.boca_abajo:
+            return 'X'
+        else:
+            return f'{self.valor}{self.palo}'
+        
+class Mazo:
+    def __init__(self):
+        self.mazo = []
+        for valor in valores:
+            for palo in palos:
+                self.mazo.append(Carta(valor,palo))
+        
+
+        random.shuffle(self.mazo)
+
+        
+        
+        def pasador(self):
+            lista = ListaDobleEnlazada()
+            for carta in self.mazo:
+                lista.agregar_al_final(carta)
+            self.mazo = lista
+        
+
+        pasador(self)
+
+        
+
+
+
+        
+x= Mazo()
+print(x.mazo)
+#[Carta(valor, palo) for valor in valores for palo in palos]
+    #    random.shuffle(self.mazo)

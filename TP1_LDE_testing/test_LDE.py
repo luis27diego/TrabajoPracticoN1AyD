@@ -261,7 +261,7 @@ class Test_LDE(unittest.TestCase):
         de los límites de la LDE. Compruebo las excepciones
         """
         # LDE vacía
-        self.assertRaises(Exception, self.lde_1.extraer(),
+        self.assertRaises(Exception, self.lde_1.extraer,
                           "Extraer de una lista vacia deberia arrojar un error")
         self.assertRaises(Exception, self.lde_1.extraer, 0,
                           "Extraer de una lista vacia deberia arrojar un error")
