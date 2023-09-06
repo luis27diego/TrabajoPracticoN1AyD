@@ -40,15 +40,18 @@ class Mazo:
             for _ in range(26):
                 carta1 = self.mazo.extraer(0)
                 carta2 = self.mazo.extraer(0)
-                self.jugador_1.agregar_al_final(carta1)
-                self.jugador_2.agregar_al_final(carta2)
+                self.jugador_1.agregar_al_incio(carta1)
+                self.jugador_2.agregar_al_inicio(carta2)
 
         repartir(self)
         
 
     
-    def poner_arriba():
+    def poner_arriba(self,Carta):
+        self.mazo.agregar_al_incio(Carta)
+
         pass
+
         
 
         
@@ -59,8 +62,8 @@ class JuegoGuerra:
     def __init__(self, semilla=None):
         self.turnos = 0
         self.max_turnos = 10000
-        self.mazo_jugador1 = Mazo.jugador
-        self.mazo_jugador2 = Mazo.jugador
+        self.mazo_jugador1 = Mazo.jugador_1
+        self.mazo_jugador2 = Mazo.jugador_2
         self.mesa = ListaDobleEnlazada()
         random.seed(semilla)
 

@@ -5,7 +5,7 @@ Created on Sun Aug 21 11:23:53 2022
 @author: je_su
 """
 
-from prueba import JuegoGuerra, Carta, Mazo 
+from prueba import Carta, Mazo 
 import unittest
 
 
@@ -14,7 +14,7 @@ class TestMazo(unittest.TestCase):
         self.mazo= Mazo()
 
 # Chequeo de repartir/poner arriba, sacar arriba/principio y poner abajo/final
-    def test_poner_sacar_arriba(self):            #Poner arriba al momento de repartir las cartas, sacar arriba al momento de jugar el turno
+    def test_poner_sacar_arriba(self):            #Poner arriba al momento de reparti lasr cartas, sacar arriba al momento de jugar el turno
         carta1=Carta('5','trebol')
         carta2=Carta('3','corazones')
         self.mazo.poner_arriba(carta1)
