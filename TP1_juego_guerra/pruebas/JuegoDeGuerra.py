@@ -1,4 +1,4 @@
-from TP1_LDE_testing.main import ListaDobleEnlazada
+from TP1_LDE_testing.ListaDobleEnLazada import ListaDobleEnlazada
 import random
 
 valores = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -40,7 +40,7 @@ class Mazo:
             for _ in range(26):
                 carta1 = self.mazo.extraer(0)
                 carta2 = self.mazo.extraer(0)
-                self.jugador_1.agregar_al_incio(carta1)
+                self.jugador_1.agregar_al_inicio(carta1)
                 self.jugador_2.agregar_al_inicio(carta2)
 
         repartir(self)
@@ -48,9 +48,18 @@ class Mazo:
 
     
     def poner_arriba(self,Carta):
-        self.mazo.agregar_al_incio(Carta)
+        self.mazo.agregar_al_inicio(Carta)
 
-        pass
+
+    def poner_abajo(self, carta):
+        self.mazo.agregar_al_final(carta)
+
+
+    def sacar_arriba(self):
+        if self.mazo:
+            return self.mazo.extraer(0)
+        else:
+            return None
 
         
 
@@ -62,8 +71,9 @@ class JuegoGuerra:
     def __init__(self, semilla=None):
         self.turnos = 0
         self.max_turnos = 10000
-        self.mazo_jugador1 = Mazo.jugador_1
-        self.mazo_jugador2 = Mazo.jugador_2
+        self.mazo = Mazo()  # Crear una instancia de Mazo para obtener las listas de jugadores
+        self.mazo_jugador1 = self.mazo.jugador_1
+        self.mazo_jugador2 = self.mazo.jugador_2
         self.mesa = ListaDobleEnlazada()
         random.seed(semilla)
 
@@ -72,20 +82,31 @@ class JuegoGuerra:
         if self.turnos >= self.max_turnos:
             print("La partida ha terminado en empate.")
             return
+        if self.mazo_jugador1.esta_vacia(): 
+            print("jugador 2 ganaa")
+            return
+        if self.mazo_jugador2.esta_vacia(): 
+            print("jugador 1 ganaa")
+            return
 
         carta_jugador1 = self.mazo_jugador1.extraer(0)
         carta_jugador2 = self.mazo_jugador2.extraer(0)
 
-        if carta_jugador1 is None:
-            print("¡Jugador 2 gana!")
-            return
-        if carta_jugador2 is None:
-            print("¡Jugador 1 gana!")
-            return
+        carta_jugador1.boca_abajo = False
+        carta_jugador2.boca_abajo = False
+
+
 
         print(f'Turno {self.turnos + 1}:')
-        print(f'Jugador 1: {carta_jugador1}')
-        print(f'Jugador 2: {carta_jugador2}')
+        print(f'jugador1: {" ".join(str(carta) if not carta.boca_abajo else "-X" for carta in self.mazo_jugador1)}')
+        print(f'jugador2: {" ".join(str(carta) if not carta.boca_abajo else "-X" for carta in self.mazo_jugador2)}')
+        print(f'Carta jugador1: {carta_jugador1}')
+        print(f'Carta jugador2: {carta_jugador2}') 
+
+
+        carta_jugador1.boca_abajo = True
+        carta_jugador2.boca_abajo = True
+
 
         self.mesa.agregar_al_final(carta_jugador1)
         self.mesa.agregar_al_final(carta_jugador2)
@@ -102,59 +123,74 @@ class JuegoGuerra:
             print('¡Guerra!')
             self.guerra()
 
-        self.turnos += 1
+        for carta in self.mesa:
+            carta.boca_abajo = True
+
+        self.turnos += 1    
 
     def guerra(self):
         if self.turnos >= self.max_turnos:
             print("La partida ha terminado en empate.")
             return
 
-        guerra_mesa = ListaDobleEnlazada()
+        #guerra_mesa = ListaDobleEnlazada()
 
         for _ in range(3):
+            if self.mazo_jugador1.esta_vacia(): 
+                print("jugador 2 gana")
+                return
+            if self.mazo_jugador2.esta_vacia(): 
+                print("jugador 1 gana")
+                return 
             carta_jugador1 = self.mazo_jugador1.extraer(0)
             carta_jugador2 = self.mazo_jugador2.extraer(0)
 
-            if carta_jugador1 is None or carta_jugador2 is None:
-                print("No hay suficientes cartas para continuar. El juego termina.")
-                return
 
-            carta_jugador1.boca_abajo = False
-            carta_jugador2.boca_abajo = False
 
-            guerra_mesa.agregar_al_final(carta_jugador1)
-            guerra_mesa.agregar_al_final(carta_jugador2)
+
+
+            self.mesa.agregar_al_final(carta_jugador1)
+            self.mesa.agregar_al_final(carta_jugador2)
 
         print('Cartas en la mesa durante la guerra:')
-        for carta in guerra_mesa:
+        for carta in self.mesa:
             print(f'{carta}', end=' ')
         print()
+    
+        if self.mazo_jugador1.esta_vacia(): 
+            print("jugador 2 gana")
+            return
+        if self.mazo_jugador2.esta_vacia(): 
+            print("jugador 1 gana")
+            return    
+
+
 
         carta_jugador1 = self.mazo_jugador1.extraer(0)
         carta_jugador2 = self.mazo_jugador2.extraer(0)
 
-        if carta_jugador1 is None:
-            print("¡Jugador 2 gana la guerra!")
-            while not guerra_mesa.esta_vacia():
-                self.mazo_jugador2.agregar_al_final(guerra_mesa.extraer())
-            return
-        if carta_jugador2 is None:
-            print("¡Jugador 1 gana la guerra!")
-            while not guerra_mesa.esta_vacia():
-                self.mazo_jugador1.agregar_al_final(guerra_mesa.extraer())
-            return
+        carta_jugador1.boca_abajo = False
+        carta_jugador2.boca_abajo = False
 
-        print(f'Cuarta carta de Jugador 1: {carta_jugador1}')
-        print(f'Cuarta carta de Jugador 2: {carta_jugador2}')
+
+        print(f'Quinta carta de Jugador 1: {carta_jugador1}')
+        print(f'Quinta carta de Jugador 2: {carta_jugador2}')
+
+        carta_jugador1.boca_abajo = True
+        carta_jugador2.boca_abajo = True
+
+        self.mesa.agregar_al_final(carta_jugador1)
+        self.mesa.agregar_al_final(carta_jugador2)
+
 
         if valores.index(carta_jugador1.valor) > valores.index(carta_jugador2.valor):
             print('Jugador 1 gana la guerra.')
-            while not guerra_mesa.esta_vacia():
-                self.mazo_jugador1.agregar_al_final(guerra_mesa.extraer())
+            while not self.mesa.esta_vacia():
+                self.mazo_jugador1.agregar_al_final(self.mesa.extraer())
         elif valores.index(carta_jugador1.valor) < valores.index(carta_jugador2.valor):
             print('Jugador 2 gana la guerra.')
-            while not guerra_mesa.esta_vacia():
-                self.mazo_jugador2.agregar_al_final(guerra_mesa.extraer())
+            while not self.mesa.esta_vacia():
+                self.mazo_jugador2.agregar_al_final(self.mesa.extraer())
         else:
             print('¡Guerra de nuevo!')
             if self.mazo_jugador1.esta_vacia or self.mazo_jugador2.esta_vacia:
@@ -165,7 +201,9 @@ class JuegoGuerra:
         self.turnos += 1
 
     def jugar(self):
-        while self.turnos < self.max_turnos:
+        while self.turnos < self.max_turnos :
+            if self.mazo_jugador1.esta_vacia() or self.mazo_jugador2.esta_vacia():
+                return
             self.jugar_turno()
 
         if self.mazo_jugador1.esta_vacia():
@@ -175,5 +213,5 @@ class JuegoGuerra:
         else:
             print("La partida ha terminado en empate.")
 
-juego = JuegoGuerra(semilla=802)
+juego = JuegoGuerra(semilla=80)
 juego.jugar()
