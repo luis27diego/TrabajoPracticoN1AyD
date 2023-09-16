@@ -17,7 +17,7 @@ class Carta:
             return f'{self.valor}{self.palo}'
         
 class Mazo:
-    def __init__(self):
+    def __init__(self,semilla=190):
         self.mazo = []
         self.jugador_1 = ListaDobleEnlazada()
         self.jugador_2 = ListaDobleEnlazada()
@@ -25,8 +25,19 @@ class Mazo:
         for valor in valores:
             for palo in palos:
                 self.mazo.append(Carta(valor,palo))
-    
-        random.shuffle(self.mazo)
+
+        if semilla is not None:
+            random.seed(semilla)
+
+        self.barejeador()
+
+    def barejeador(self):
+
+        if self.mazo:
+            self.mazo = random.sample(self.mazo, len(self.mazo))
+
+
+        #random.shuffle(self.mazo)
         
         def pasador(self):
             lista = ListaDobleEnlazada()
@@ -213,5 +224,5 @@ class JuegoGuerra:
         else:
             print("La partida ha terminado en empate.")
 
-juego = JuegoGuerra(semilla=80)
+juego = JuegoGuerra()
 juego.jugar()
