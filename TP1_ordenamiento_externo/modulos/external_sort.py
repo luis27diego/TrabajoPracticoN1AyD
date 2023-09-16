@@ -1,3 +1,4 @@
+import random
 # Define el tamaño máximo de una línea
 MAX_LINE = 21
 
