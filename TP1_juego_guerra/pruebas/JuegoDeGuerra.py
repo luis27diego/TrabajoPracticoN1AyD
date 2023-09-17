@@ -72,12 +72,6 @@ class Mazo:
         else:
             return None
 
-        
-
-        
-
-
-
 class JuegoGuerra:
     def __init__(self, semilla=None):
         self.turnos = 0

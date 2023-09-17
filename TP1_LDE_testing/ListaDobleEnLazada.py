@@ -59,7 +59,6 @@ class ListaDobleEnlazada:
     def insertar(self,dato,posicion = None):
         nuevo_nodo = Nodo(dato)
 
-
         if not self.cabeza:
             self.cabeza = nuevo_nodo
             self.cola = nuevo_nodo
@@ -93,8 +92,6 @@ class ListaDobleEnlazada:
     def copiar(self):
         nuevalista = ListaDobleEnlazada()
         actual = self.cabeza
-
-
         while actual !=None:
             nuevalista.insertar(actual.dato)
             actual = actual.siguiente
