@@ -242,8 +242,8 @@ class ListaDobleEnlazada:
 # Método auxiliar para realizar la ordenación mediante quicksort.
     def ordenar_auxiliar(self,primero,ultimo):
         if primero < ultimo:
-            # Lo segundo es llamar a la función quick_sort que va a ordenar y retornar un punto para dividir la lista
-            puntoDivision = self.quick_sort(primero,ultimo)
+            # Lo segundo es llamar a la función ordenamiento_rapido que va a ordenar y retornar un punto para dividir la lista
+            puntoDivision = self.ordenamiento_rapido(primero,ultimo)
 
             # Luego de dividir la lista, se llama a si misma para repetir el proceso de puntoDivision pero en la primera mitad
             self.ordenar_auxiliar(primero,puntoDivision-1)
@@ -252,7 +252,7 @@ class ListaDobleEnlazada:
             self.ordenar_auxiliar(puntoDivision+1,ultimo)
 
 # Método que realiza el particionamiento en quicksort y devuelve el punto de división.
-    def quick_sort(self,primero,ultimo):
+    def ordenamiento_rapido(self,primero,ultimo):
     # Determinar los nodos pivote, izquierdo y derecho según las posiciones proporcionadas.
 
         # Si primero y último son los valores predeterminados, se utiliza toda la lista.

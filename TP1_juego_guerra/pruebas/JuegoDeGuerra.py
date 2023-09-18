@@ -35,10 +35,10 @@ class Mazo:
         if semilla is not None:
             random.seed(semilla)    # Inicialización de la semilla para la aleatoriedad.
 
-        self.barejeador()        # Barajar el mazo.
+        self.barajador()        # Barajar el mazo.
 
     # Método para barajar el mazo de cartas.
-    def barejeador(self):
+    def barajador(self):
 
         # Verificar si el mazo no está vacío antes de barajar.
         if self.mazo:
