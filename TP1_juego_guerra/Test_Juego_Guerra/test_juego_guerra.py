@@ -5,7 +5,9 @@ Created on Sun Aug 21 11:23:53 2022
 @author: je_su
 """
 
-from JuegoDeGuerra import Carta, Mazo 
+from TP1_juego_guerra.modulos.Cartas import Carta 
+from TP1_juego_guerra.modulos.Mazo import Mazo 
+
 import unittest
 
 

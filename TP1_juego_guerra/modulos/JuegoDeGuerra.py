@@ -1,87 +1,9 @@
-from TP1_LDE_testing.ListaDobleEnLazada import ListaDobleEnlazada
-import random
+from TP1_juego_guerra.modulos.Mazo import Mazo    # Importa la clase Mazo desde el archivo mazo.py
+from TP1_ListaDobleEnlazada.modulos.ListaDobleEnlazada import ListaDobleEnlazada
 
 valores = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 palos = ['♠', '♥', '♦', '♣']
 
-# Clase que representa una carta en el juego de la Guerra, se crean los atributos de la carta 
-class Carta:
-    def __init__(self, valor, palo):
-        self.valor = valor
-        self.palo = palo
-        self.boca_abajo = True
-        
-    # Método especial para convertir la carta en una cadena legible.
-    def __str__(self):
-        
-        if self.boca_abajo:
-            return 'X'  # Si la carta está boca abajo, se representa con 'X'.
-        
-        else:
-            return f'{self.valor}{self.palo}' # Si no, se muestra el valor y el palo de la carta.
-        
-# Clase que representa un mazo de cartas y las distribuye a dos jugadores.       
-class Mazo:
-    def __init__(self,semilla=None):
-        self.mazo = []
-        self.jugador_1 = ListaDobleEnlazada()   # Mazo del jugador 1.
-        self.jugador_2 = ListaDobleEnlazada()   # Mazo del jugador 2.
-
-        # Creación del mazo de cartas, combinando valores y palos.
-        for valor in valores:
-            for palo in palos:
-                self.mazo.append(Carta(valor,palo))
-
-        if semilla is not None:
-            random.seed(semilla)    # Inicialización de la semilla para la aleatoriedad.
-
-        self.barajador()        # Barajar el mazo.
-
-    # Método para barajar el mazo de cartas.
-    def barajador(self):
-
-        # Verificar si el mazo no está vacío antes de barajar.
-        if self.mazo:
-
-            # Se barajea el mazo.
-            self.mazo = random.sample(self.mazo, len(self.mazo))
-
-
-        # Método para pasar de una lista de python a una ListaDobleEnlazada
-        def pasador(self):
-            
-            lista = ListaDobleEnlazada()   # Se crea una ListaDobleEnlazada
-            for carta in self.mazo:
-                lista.agregar_al_final(carta)   # Se agregan las cartas a ListaDobleEnlazada
-            self.mazo = lista    # Ahora self.mazo va a ser una ListaDobleEnlazada
-
-        pasador(self)
-
-        # Método para repartir las cartas a los dos jugadores.    
-        def repartir(self):
-            for _ in range(26):    # For para extraer las cartas del mazo, repartirlas y agregarlas a los jugadores.
-                carta1 = self.mazo.extraer(0)
-                carta2 = self.mazo.extraer(0)
-                self.jugador_1.agregar_al_inicio(carta1)
-                self.jugador_2.agregar_al_inicio(carta2)
-
-        repartir(self)
-        
-    # Método para poner en la parte superior del mazo.   
-    def poner_arriba(self,Carta):
-        self.mazo.agregar_al_inicio(Carta)
-
-    # Método para poner abajo del mazo.  
-    def poner_abajo(self, carta):
-        self.mazo.agregar_al_final(carta)
-
-    # Método para sacar cartas en la parte superior del mazo.   
-    def sacar_arriba(self):
-        if self.mazo:
-            return self.mazo.extraer(0)
-        else:
-            return None
-        
 # Clase que representa el juego de la Guerra.
 class JuegoGuerra:
     def __init__(self, semilla=None):
@@ -261,6 +183,3 @@ class JuegoGuerra:
             print("¡Jugador 1 gana la partida!")
         else:
             print("La partida ha terminado en empate.")
-
-juego = JuegoGuerra(178)
-juego.jugar()

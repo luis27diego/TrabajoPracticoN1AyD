@@ -1,4 +1,4 @@
-from ListaDobleEnLazada import ListaDobleEnlazada
+from TP1_ListaDobleEnlazada.modulos.ListaDobleEnlazada import ListaDobleEnlazada
 import random
 import time
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ def tiempo_ordenar(lista):
     fin = time.time()
     return fin - inicio
 
-tamaños = [1000,3000,7000,10000,20000]  # Cambia estos valores según tus necesidades
+tamaños = [1000,3000,7000,10000,20000,30000]  # Cambia estos valores según tus necesidades
 tiempos = []
 
 for n in tamaños:
