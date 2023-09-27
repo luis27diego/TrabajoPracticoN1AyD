@@ -1,16 +1,12 @@
-# -*- coding: utf-8 -*-
-"""
-Sala de emergencias
-"""
-
 import time
 import datetime
-import modulos.paciente as pac
+from TP2_problema1.modulos.paciente import Paciente 
 import random
+from TP2_problema1.modulos.MonticuloBinario import MonticuloMinimo
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = list()
+cola_de_espera = MonticuloMinimo()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
@@ -22,13 +18,13 @@ for i in range(n):
 
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
-    paciente = pac.Paciente()
-    cola_de_espera.append(paciente)
+    paciente = Paciente()
+    cola_de_espera.insertar(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.pop(0)
+        paciente_atendido = cola_de_espera.extraer_minimo()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
@@ -40,7 +36,7 @@ for i in range(n):
 
     # Se muestran los pacientes restantes en la cola de espera
     print('Pacientes que faltan atenderse:', len(cola_de_espera))
-    for paciente in cola_de_espera:
+    for paciente in cola_de_espera.monticulo:
         print('\t', paciente)
     
     print()
@@ -48,3 +44,13 @@ for i in range(n):
     
     time.sleep(1)
 
+# Una vez que no ingresen más pacientes, atender a todos los pacientes restantes en la fila de espera
+print('No se ingresarán más pacientes. Atendiendo a los pacientes restantes...')
+while len(cola_de_espera) > 0:
+    paciente_atendido = cola_de_espera.extraer_minimo()
+    print('*'*40)
+    print('Se atiende el paciente:', paciente_atendido)
+    print('*'*40)
+    time.sleep(1)
+
+print('Todos los pacientes han sido atendidos.')
