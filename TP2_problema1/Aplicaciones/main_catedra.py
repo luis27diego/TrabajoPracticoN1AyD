@@ -2,7 +2,6 @@
 """
 Sala de emergencias
 """
-
 import time
 import datetime
 from TP2_problema1.modulos.paciente import Paciente 
