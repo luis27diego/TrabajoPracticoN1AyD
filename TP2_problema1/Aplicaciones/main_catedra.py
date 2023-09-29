@@ -6,11 +6,12 @@ import time
 import datetime
 from TP2_problema1.modulos.paciente import Paciente 
 import random
-from TP2_problema1.modulos.MonticuloBinario import MonticuloMinimo
+from TP2_problema1.modulos.MonticuloPaciente import MonticuloBinarioPaciente
+
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = MonticuloMinimo()
+cola_de_espera = MonticuloBinarioPaciente()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
@@ -23,12 +24,12 @@ for i in range(n):
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
     paciente = Paciente()
-    cola_de_espera.insertar(paciente)
+    cola_de_espera.ingresar_paciente(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.extraer_minimo()
+        paciente_atendido = cola_de_espera.ateneder()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
@@ -40,7 +41,7 @@ for i in range(n):
 
     # Se muestran los pacientes restantes en la cola de espera
     print('Pacientes que faltan atenderse:', len(cola_de_espera))
-    for paciente in cola_de_espera.monticulo:
+    for paciente in cola_de_espera:
         print('\t', paciente)
     
     print()

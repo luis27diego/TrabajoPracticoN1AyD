@@ -35,7 +35,20 @@ class Paciente:
         cad += self.__apellido + '\t -> '
         cad += str(self.__riesgo) + '-' + self.__descripcion
         return cad
-        
+    
+    # Método especial para comparación de igualdad (==)
+    def __eq__(self, otro):
+        return (self.__nombre == otro.__nombre and
+                self.__apellido == otro.__apellido and
+                self.__riesgo == otro.__riesgo)
+    
+    # Método especial para comparación de menor que (<)
+    def __lt__(self, otro):
+        return self.__riesgo < otro.__riesgo
+    
+    # Método especial para comparación de mayor que (>)
+    def __gt__(self, otro):
+        return self.__riesgo > otro.__riesgo         
         
         
         
