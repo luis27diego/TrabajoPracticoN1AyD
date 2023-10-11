@@ -1,4 +1,4 @@
-from TP2_problema2.modulos.ABB import ArbolBinarioBusqueda
+from TP2_problema2.modulos.abb import ArbolBinarioBusqueda
 from TP2_problema2.modulos.Arbol_nodo import NodoArbol
 
 class AVL(ArbolBinarioBusqueda):
