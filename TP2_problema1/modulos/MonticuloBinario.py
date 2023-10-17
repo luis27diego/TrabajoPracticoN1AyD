@@ -9,7 +9,7 @@ class MonticuloBinario:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
              tmp = self.listaMonticulo[i // 2]
              self.listaMonticulo[i // 2] = self.listaMonticulo[i]
-             self.listaMonticulo[i] = tmp
+             self.listaMonticulo[i] = tmp         
           i = i // 2
 
     def insertar(self,k):
