@@ -3,7 +3,7 @@ class MonticuloBinario:
         self.listaMonticulo = [0]
         self.tamanoActual = 0
 
-
+# metodo para infiltrar hacia arriba
     def infiltArriba(self,i):
         while i // 2 > 0:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
