@@ -10,6 +10,7 @@ class AVL_Implementacion:
         self.avl_implementacion.agregar(fecha,temperatura)
     
     def devolver_temperatura(self,fecha):
+        fecha = datetime.strptime(fecha, "%d/%m/%Y")
         return self.avl_implementacion.obtener(fecha)
     
     def max_temp_rango(self, fecha1, fecha2):
@@ -75,49 +76,56 @@ class AVL_Implementacion:
 
     def cantidad_muetras(self):
         return self.avl_implementacion.longitud()
+    
+
+    def borrar_temperatura(self,fecha):
+        fecha = datetime.strptime(fecha, "%d/%m/%Y")
+        return self.avl_implementacion.eliminar_avl(fecha)
+
 
 
     
  
         
 
-# Crear una instancia de Temperaturas_DB
-db = AVL_Implementacion()
+# # Crear una instancia de Temperaturas_DB
+# db = AVL_Implementacion()
 
-# Agregar algunas temperaturas
-db.guardar_temperatura("01/01/2023",25.5)
-db.guardar_temperatura("02/02/2023",30.0)
-db.guardar_temperatura("08/01/2023",55.0)
-db.guardar_temperatura("04/01/2023",37.0)
-db.guardar_temperatura("07/01/2023",88.0)
-db.guardar_temperatura("03/01/2023",14.0)
+# # Agregar algunas temperaturas
+# db.guardar_temperatura("01/01/2023",25.5)
+# db.guardar_temperatura("02/02/2023",30.0)
+# db.guardar_temperatura("08/01/2023",55.0)
+# db.guardar_temperatura("04/01/2023",37.0)
+# db.guardar_temperatura("07/01/2023",88.0)
+# db.guardar_temperatura("03/01/2023",14.0)
 
-
-
-# Calcular la temperatura máxima en un rango
-fecha1 = "02/01/2023"
-fecha2 ="07/02/2023"
-max_temperatura = db.max_temp_rango(fecha1, fecha2)
-min_temperatura = db.min_temp_rango(fecha1, fecha2)
-extremos = db.temp_extremos_rango (fecha1,fecha2)
-devolver_temp = db.devolver_temperaturas(fecha1,fecha2)
-cantidad_db = db.cantidad_muetras()
-print(cantidad_db)
+# db.borrar_temperatura("07/01/2023")
 
 
+# # Calcular la temperatura máxima en un rango
+# fecha1 = "02/01/2023"
+# fecha2 ="07/02/2023"
+# max_temperatura = db.max_temp_rango(fecha1, fecha2)
+# min_temperatura = db.min_temp_rango(fecha1, fecha2)
+# extremos = db.temp_extremos_rango (fecha1,fecha2)
+# devolver_temp = db.devolver_temperaturas(fecha1,fecha2)
+# cantidad_db = db.cantidad_muetras()
+# print(cantidad_db)
 
-if max_temperatura is not None:
-    print(f"La temperatura máxima en el rango entre {fecha1} y {fecha2} es: {max_temperatura} ºC")
-else:
-    print(f"No se encontraron temperaturas en el rango entre {fecha1} y {fecha2}")
 
-if min_temperatura is not None:
-    print(f"La temperatura máxima en el rango entre {fecha1} y {fecha2} es: {min_temperatura} ºC")
 
-if extremos is not None:
-    print(f"Las temperaturas Extremas dentro del rango entre {fecha1} y {fecha2} es: {extremos} ºC")
+# if max_temperatura is not None:
+#     print(f"La temperatura máxima en el rango entre {fecha1} y {fecha2} es: {max_temperatura} ºC")
+# else:
+#     print(f"No se encontraron temperaturas en el rango entre {fecha1} y {fecha2}")
 
-if devolver_temp is not None:
-    print(f"Las temperaturas dentro del rango entre {fecha1} y {fecha2} es: {devolver_temp} ºC")
+# if min_temperatura is not None:
+#     print(f"La temperatura máxima en el rango entre {fecha1} y {fecha2} es: {min_temperatura} ºC")
+
+# if extremos is not None:
+#     print(f"Las temperaturas Extremas dentro del rango entre {fecha1} y {fecha2} es: {extremos} ºC")
+
+# if devolver_temp is not None:
+#     print(f"Las temperaturas dentro del rango entre {fecha1} y {fecha2} es: {devolver_temp} ºC")
 
 

@@ -42,6 +42,46 @@ class NodoArbol:
         if self.tieneHijoDerecho():
             self.hijoDerecho.padre = self
 
+    def encontrarSucesor(self):
+      suc = None
+      if self.tieneHijoDerecho():
+          suc = self.hijoDerecho.encontrarMin()
+      else:
+          if self.padre:
+                 if self.esHijoIzquierdo():
+                     suc = self.padre
+                 else:
+                     self.padre.hijoDerecho = None
+                     suc = self.padre.encontrarSucesor()
+                     self.padre.hijoDerecho = self
+      return suc
+
+    def encontrarMin(self):
+      actual = self
+      while actual.tieneHijoIzquierdo():
+          actual = actual.hijoIzquierdo
+      return actual
+
+    def empalmar(self):
+       if self.esHoja():
+           if self.esHijoIzquierdo():
+                  self.padre.hijoIzquierdo = None
+           else:
+                  self.padre.hijoDerecho = None
+       elif self.tieneAlgunHijo():
+           if self.tieneHijoIzquierdo():
+                  if self.esHijoIzquierdo():
+                     self.padre.hijoIzquierdo = self.hijoIzquierdo
+                  else:
+                     self.padre.hijoDerecho = self.hijoIzquierdo
+                  self.hijoIzquierdo.padre = self.padre
+           else:
+                  if self.esHijoIzquierdo():
+                     self.padre.hijoIzquierdo = self.hijoDerecho
+                  else:
+                     self.padre.hijoDerecho = self.hijoDerecho
+                  self.hijoDerecho.padre = self.padre
+
     def __iter__(self):
         if self:
             if self.tieneHijoIzquierdo():

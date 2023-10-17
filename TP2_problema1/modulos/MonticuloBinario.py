@@ -50,3 +50,7 @@ class MonticuloBinario:
       while (i > 0):
           self.infiltAbajo(i)
           i = i - 1
+    
+    def estaVacia(self):
+       return self.tamanoActual == 0
+      

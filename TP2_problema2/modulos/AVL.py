@@ -26,6 +26,46 @@ class AVL(ArbolBinarioBusqueda):
                     nodoActual.hijoDerecho = NodoArbol(clave,valor,padre=nodoActual)
                     self.actualizarEquilibrio(nodoActual.hijoDerecho)
 
+    def eliminar_avl(self, clave):
+        if self.tamano > 1:
+            nodoAEliminar = self._obtener(clave, self.raiz)
+
+            if nodoAEliminar:
+                self.actualizarEquilibrio_elim(nodoAEliminar)
+                self.remover(nodoAEliminar)
+                self.tamano = self.tamano - 1
+                # self.reequilibrarDespuesEliminar(nodoAEliminar)  # Reequilibrar después de eliminar
+            else:
+                raise KeyError('Error, la clave no está en el árbol')
+        elif self.tamano == 1 and self.raiz.clave == clave:
+            self.raiz = None
+            self.tamano = self.tamano - 1
+        else:
+            raise KeyError('Error, la clave no está en el árbol')
+
+    def actualizarEquilibrio_elim(self, nodo):
+        if nodo.factorEquilibrio > 1 or nodo.factorEquilibrio < -1:
+            self.reequilibrar(nodo)
+            return
+        if nodo.padre != None:
+            if nodo.esHijoIzquierdo():
+                nodo.padre.factorEquilibrio -= 1
+            elif nodo.esHijoDerecho():
+                nodo.padre.factorEquilibrio += 1
+
+            if nodo.padre.factorEquilibrio == 0:
+                self.actualizarEquilibrio_elim(nodo.padre)
+
+    # si el nodo padre es desquilibrado (-2 o 2), hay que actualizarlo
+            # else:
+            #     if nodo.padre.factorEquilibrio > 1 or nodo.padre.factorEquilibrio < -1:
+            #         self.actualizarEquilibrio_elim(nodo.padre)
+
+            #     else:                                                                                  
+            #         return
+            else:
+                 return
+
     def actualizarEquilibrio(self,nodo):
         if nodo.factorEquilibrio > 1 or nodo.factorEquilibrio < -1:
             self.reequilibrar(nodo)
@@ -99,26 +139,29 @@ class AVL(ArbolBinarioBusqueda):
             print("   " * nivel + str(nodo.clave))
             self._mostrar(nodo.hijoIzquierdo, nivel + 1)
 
-# Crear un árbol AVL
-mi_arbol_avl = AVL()
+# # Crear un árbol AVL
+# mi_arbol_avl = AVL()
 
-# Agregar elementos al árbol
-mi_arbol_avl.agregar(1, "Dato 1")
-mi_arbol_avl.agregar(2, "Dato 2")
-mi_arbol_avl.agregar(8, "Dato 8")
-mi_arbol_avl.agregar(4, "Dato 4")
-mi_arbol_avl.agregar(7, "Dato 7")
-mi_arbol_avl.agregar(3, "Dato 3")
+# # Agregar elementos al árbol
+# mi_arbol_avl.agregar(1, "Dato 1")
+# mi_arbol_avl.agregar(2, "Dato 2")
+# mi_arbol_avl.agregar(8, "Dato 8")
+# mi_arbol_avl.agregar(4, "Dato 4")
+# mi_arbol_avl.agregar(7, "Dato 7")
+# mi_arbol_avl.agregar(3, "Dato 3")
 
 
 
-# Mostrar el árbol antes de la rotación
-print("Árbol AVL antes de la rotación a la derecha:")
-mi_arbol_avl.mostrar()
+# mi_arbol_avl.eliminar(1)
+# mi_arbol_avl.eliminar(3)
 
-# Agregar un nodo que desequilibrará el árbol
-# mi_arbol_avl.agregar(13, "Dato 13")
 
-# Mostrar el árbol después de agregar el nodo
-# print("\nÁrbol AVL después de agregar 13 (requiere rotación a la derecha):")
+# ESTO COMMENT
+# # mi_arbol_avl.eliminar(7)
+# # mi_arbol_avl.eliminar(8)
+
+# # mi_arbol_avl.eliminar(8)
+# HASTA AQUI
+
+
 # mi_arbol_avl.mostrar()
