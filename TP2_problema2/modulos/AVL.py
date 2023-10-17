@@ -1,4 +1,4 @@
-from TP2_problema2.modulos.abb import ArbolBinarioBusqueda
+from TP2_problema2.modulos.ABB import ArbolBinarioBusqueda
 from TP2_problema2.modulos.Arbol_nodo import NodoArbol
 
 class AVL(ArbolBinarioBusqueda):
@@ -41,7 +41,8 @@ class AVL(ArbolBinarioBusqueda):
             self.raiz = None
             self.tamano = self.tamano - 1
         else:
-            raise KeyError('Error, la clave no está en el árbol')
+            raise KeyError('Error, la clave no está en el árbol, esta vacio')
+        return nodoAEliminar
 
     def actualizarEquilibrio_elim(self, nodo):
         if nodo.factorEquilibrio > 1 or nodo.factorEquilibrio < -1:

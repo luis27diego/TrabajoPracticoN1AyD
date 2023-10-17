@@ -40,7 +40,7 @@ class AVL_Implementacion:
                 self._obtener_rango(nodo.hijoIzquierdo, fecha_inicio, fecha_fin, resultado)
 
             if fecha_inicio <= nodo.clave <= fecha_fin:
-                resultado.append((nodo.clave, nodo.cargaUtil))
+                resultado.append((nodo.clave.strftime("%Y-%m-%d"), nodo.cargaUtil))
             
             if nodo.clave <= fecha_fin:
                 self._obtener_rango(nodo.hijoDerecho, fecha_inicio, fecha_fin, resultado)
@@ -80,7 +80,8 @@ class AVL_Implementacion:
 
     def borrar_temperatura(self,fecha):
         fecha = datetime.strptime(fecha, "%d/%m/%Y")
-        return self.avl_implementacion.eliminar_avl(fecha)
+
+        return self.avl_implementacion.eliminar_avl(fecha).cargaUtil
 
 
 
