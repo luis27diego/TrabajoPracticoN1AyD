@@ -1,4 +1,5 @@
 from TP2_problema33.modulos.Vertice import Vertice
+from TP2_problema33.modulos.Dijkstra import dijkstra_cuello_botella, camino_dijkstra__o
 
 class Grafo:
     def __init__(self):
@@ -21,12 +22,16 @@ class Grafo:
         return n in self.listaVertices
 
     def agregarArista(self, de, a, ponderacion=0, segunda_ponderacion=0):
-            if de not in self.listaVertices:
-                nv = self.agregarVertice(de)
-            if a not in self.listaVertices:
-                nv = self.agregarVertice(a)
-            self.listaVertices[de].agregarVecino(self.listaVertices[a], ponderacion,segunda_ponderacion)
-            # self.listaVertices[de].segunda_ponderacion = segunda_ponderacion  # Asigna la segunda ponderación
+        # Verifica si el vértice 'de' no está en la lista de vértices y, si no está, lo agrega.
+        if de not in self.listaVertices:
+            nv = self.agregarVertice(de)
+        
+        # Verifica si el vértice 'a' no está en la lista de vértices y, si no está, lo agrega.
+        if a not in self.listaVertices:
+            nv = self.agregarVertice(a)
+        
+        # Agrega el vértice 'a' como vecino del vértice 'de' con la ponderación y segunda ponderación especificadas.
+        self.listaVertices[de].agregarVecino(self.listaVertices[a], ponderacion, segunda_ponderacion)
 
     def obtenerVertices(self):
         return self.listaVertices.keys()
@@ -34,78 +39,94 @@ class Grafo:
     def __iter__(self):
         return iter(self.listaVertices.values())
     
-    def camino_dijkstra(self,a,b):
-        camino = []
-        x = self.obtenerVertice(b.id)
+    def crear_grafo_de_rutas_posibles_peso_max(self, inicio, final):
+        # Ejecuta el algoritmo dijkstra_cuello_botella para encontrar el cuello de botella del camino óptimo.
+        dijkstra_cuello_botella(self, inicio, final)
         
-        actual = x
-        while actual !=None:
-            camino.insert(0,actual.id)
-            actual = actual.predecesor
-            # actual = self.obtenerVertice(actual.id).predecesor
-        x = self.obtenerVertice(b.id)
-        return [camino, x.distancia]
-    
-
-    
-    def crear_grafo_de_rutas_posibles(self, inicio, final,peso):
+        # Obtiene el valor del cuello de botella calculado en el paso anterior.
+        cuello = camino_dijkstra__o(self, inicio, final)[1]
+        
+        # Crea un nuevo grafo vacío.
         grafo = Grafo()
-        tabla = self.eliminar_rutas_sobrepeso(inicio,final,peso)
-        # Supongamos que lista_rutas es una lista de listas de vértices que forman las rutas
         
-        # Agrega las aristas al grafo basadas en las rutas
+        # Obtiene los identificadores de inicio y final para asi ser pasados al metodo eliminar_rutas_posibles.
+        inicio = inicio.id
+        final = final.id
+        
+        # Obtiene una tabla de rutas filtradas que cumplen con el cuello de botella calculado.
+        tabla = self.eliminar_rutas_sobrepeso(inicio, final, cuello)
+
         for ruta in tabla:
             for i in range(len(ruta[3]) - 1):
+                # Itera a través de los vértices de la ruta.
 
-                x = self.obtenerVertice(ruta[3][i])
-                y = self.obtenerVertice(ruta[3][i+1])
-                grafo.agregarArista(ruta[3][i], ruta[3][i+1],x.obtenerSegundaPonderacion(y))
+                x = self.obtenerVertice(ruta[3][i])  # Obtiene el vértice 'x'.
+                y = self.obtenerVertice(ruta[3][i+1])  # Obtiene el vértice 'y'.
 
-        return grafo
+                # Agrega una arista entre los vértices 'x' e 'y' con el peso de la segunda ponderación.
+                grafo.agregarArista(ruta[3][i], ruta[3][i+1], x.obtenerSegundaPonderacion(y))
 
-    def eliminar_rutas_sobrepeso(self, inicio, final,peso_maximo):
-        lista_rutas = self.todos_los_cuellos_de_botella_de_rutas_posibles(inicio,final)
-        rutas_filtradas = [ruta for ruta in lista_rutas if ruta[0] >= peso_maximo]
-        return rutas_filtradas
-
+        return grafo  # Retorna el nuevo grafo basado en las rutas filtradas para luego utilizar dijkstra y encontrar el mínimo costo.
     
-    def cuello_de_botella(self, inicio, final):
-        c = self.todos_los_cuellos_de_botella_de_rutas_posibles(inicio, final)
-        
-        if not c:
-            # Si c está vacía, puedes manejarlo como quieras, por ejemplo, retornar un valor predeterminado.
-            return "No hay rutaas posibles"  # O cualquier otro valor que desees
+    
+    def crear_grafo_de_rutas_posibles(self, inicio, final, peso):
+        grafo = Grafo()  # Crea un nuevo grafo vacío.
+        tabla = self.eliminar_rutas_sobrepeso(inicio, final, peso)
+        # Supongamos que 'tabla' es una lista de rutas filtradas con cuellos de botella dentro del peso especificado.
 
-        maximo_tupla = max(c, key=lambda tupla: tupla[0])
-        return maximo_tupla
+        # Agrega las aristas al grafo basadas en las rutas
+        for ruta in tabla:
+            for i in range(len(ruta[3]) - 1):  # "ruta[3]" porque la tupla tiene en su elemento 3 la lsita de vertices de la ruta
+                # Itera a través de los vértices de la ruta.
+
+                x = self.obtenerVertice(ruta[3][i])  # Obtiene el vértice 'x'.
+                y = self.obtenerVertice(ruta[3][i+1])  # Obtiene el vértice 'y'.
+
+                # Agrega una arista entre los vértices 'x' e 'y' con el peso de la segunda ponderación.
+                grafo.agregarArista(ruta[3][i], ruta[3][i+1], x.obtenerSegundaPonderacion(y))
+
+        return grafo  # Retorna el nuevo grafo basado en las rutas filtradas para luego utilizar dijkstra y econtrar el minimo costo
 
 
-    def todos_los_cuellos_de_botella_de_rutas_posibles(self,inicio, final):
+    def eliminar_rutas_sobrepeso(self, inicio, final, peso_maximo):
+        # Obtiene la lista de todos los cuellos de botella de rutas posibles entre el vértice de inicio y el vértice final.
+        lista_rutas = self.todos_los_cuellos_de_botella_de_rutas_posibles(inicio, final)
+
+        # Filtra las rutas que tienen un cuello de botella mayor o igual al peso máximo especificado.
+        rutas_filtradas = [ruta for ruta in lista_rutas if ruta[0] >= peso_maximo]
+
+        return rutas_filtradas  # Retorna la lista de rutas filtradas con cuellos de botella dentro del peso especificado.
+
+    def todos_los_cuellos_de_botella_de_rutas_posibles(self, inicio, final):
+        # Encuentra todos los caminos posibles entre el vértice de inicio y el vértice final.
         cam = self.encontrador_caminos_posibles(inicio, final)
         
-        contador = 0
-        cuellos = []
+        contador = 0  # Inicializa un contador para llevar un seguimiento de los caminos.
+        cuellos = []  # Inicializa una lista para almacenar los cuellos de botella encontrados.
 
         for camino in cam:
-            contador += 1 
-            cuello = (9000000000,None)
-            for i in range(len(camino)):
+            contador += 1  # Incrementa el contador para identificar el camino actual.
+            cuello = (9000000000, None)  # Inicializa el cuello de botella con un valor alto y sin información.
+            
+            for i in range(len(camino)-1): # for para iterar las sublistas que contienen a la ruta y obtener su cuello de botella
+
                 siguiente = i + 1
-
-                if siguiente  < len(camino):
-                    vecino = camino[siguiente]
-                else:
-                    break
-                
+                vecino = camino[siguiente]  # Obtiene el vértice vecino en el camino.
                 cuello_de_botella = camino[i].obtenerPonderacion(vecino)
-                if cuello_de_botella < cuello[0]:
-                    cuello = (cuello_de_botella , "camino "+ str(contador),"La ruta con mayor capacidad de carga:", [i.obtenerId()  for i in camino], "el cuello de botella se presenta de " + camino[i].obtenerId() + " a " + vecino.obtenerId())
-            cuellos.append(cuello)
-    
-        
-        return cuellos
-    
+                # Calcula el cuello de botella entre el vértice actual y su vecino.
 
+                if cuello_de_botella < cuello[0]:
+                    # Si el cuello de botella actual es menor que el registrado anteriormente.
+                    cuello = (cuello_de_botella, "camino " + str(contador),
+                            "La ruta con mayor capacidad de carga:", [i.obtenerId() for i in camino],
+                            "el cuello de botella se presenta de " + camino[i].obtenerId() + " a " + vecino.obtenerId())
+                    # Actualiza el cuello de botella con la nueva información.
+
+            cuellos.append(cuello)  # Agrega el cuello de botella del camino actual a la lista.
+
+        return cuellos  # Retorna la lista de cuellos de botella encontrados.
+
+    
     def encontrador_caminos_posibles(self,inicio,final):
         tabla_ver = []
         cam = self.encontrar_caminos_posibles_str(inicio,final)
@@ -117,25 +138,27 @@ class Grafo:
         return tabla_ver   
     
     def encontrar_caminos_posibles_str(self, inicio, final):
-        res = []
-        camino = [inicio]
-        vecinos = self.listaVertices[inicio].obtenerConexiones()
+        res = []  # Inicializa una lista para almacenar los caminos encontrados.
+        camino = [inicio]  # Inicializa una lista para representar el camino actual, empezando desde el vértice de inicio.
+        vecinos = self.listaVertices[inicio].obtenerConexiones()  # Obtiene los vecinos del vértice de inicio.
 
         def encontrar_caminos(inicio, final, camino, res):
+            # Función recursiva para encontrar caminos desde el vértice 'inicio' al vértice 'final'.
             if inicio == final:
-                res.append(list(camino))
+                res.append(list(camino))  # Si se llega al vértice final, se añade el camino a la lista de resultados.
             else:
-                vecinos = self.listaVertices[inicio].obtenerConexiones()
+                vecinos = self.listaVertices[inicio].obtenerConexiones()  # Obtiene los vecinos del vértice actual.
                 for vecino in vecinos:
-                    act = vecino.obtenerId()
-                    if act not in camino:
-                        copia = list(camino)
-                        copia.append(act)
-                        encontrar_caminos(act, final, copia, res)
+                    act = vecino.obtenerId()  # Obtiene el ID del vecino.
+                    if act not in camino:  # Verifica que el vecino no esté en el camino actual para evitar ciclos.
+                        copia = list(camino)  # Crea una copia del camino actual.
+                        copia.append(act)  # Agrega el vecino al camino copiado.
+                        encontrar_caminos(act, final, copia, res)  # Llama a la función recursivamente.
 
         for vecino in vecinos:
-            act = vecino.obtenerId()
-            copia = list(camino)
-            copia.append(act)
-            encontrar_caminos(act, final, copia, res)
-        return res
+            act = vecino.obtenerId()  # Obtiene el ID del vecino.
+            copia = list(camino)  # Crea una copia del camino actual.
+            copia.append(act)  # Agrega el vecino al camino copiado.
+            encontrar_caminos(act, final, copia, res)  # Llama a la función recursiva para encontrar caminos desde el vecino al final.
+        return res  # Retorna la lista de caminos encontrados.
+
