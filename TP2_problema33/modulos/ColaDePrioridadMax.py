@@ -13,7 +13,7 @@ class ColaPrioridadMax:
             self.bajar(i)  # Se ajusta el montículo para que sea válido.
             i = i - 1
 
-    def eliminarMin(self):
+    def eliminarMax(self):
         # Elimina el elemento con la máxima prioridad (valor) y lo devuelve.
         val_raiz = self.listaMonticulo[1]  # Obtiene la raíz (elemento con máxima prioridad).
         self.listaMonticulo[1] = self.listaMonticulo[self.tamanio]  # Reemplaza la raíz con el último elemento del montículo.
@@ -40,21 +40,21 @@ class ColaPrioridadMax:
         return self.tamanio == 0
 
     def subir(self, i):
-        # Ajusta el montículo subiendo un nodo específico para mantener la propiedad de max heap.
+        # Ajusta el montículo subiendo un nodo específico para mantener la propiedad de maximo.
         while i // 2 > 0:
             if self.listaMonticulo[i][0] > self.listaMonticulo[i // 2][0]:  # Compara la prioridad con su padre.
                 self.listaMonticulo[i], self.listaMonticulo[i // 2] = self.listaMonticulo[i // 2], self.listaMonticulo[i]  # Intercambia si es necesario.
             i = i // 2  # Se mueve hacia el padre.
 
     def bajar(self, i):
-        # Ajusta el montículo bajando un nodo específico para mantener la propiedad de max heap.
+        # Ajusta el montículo bajando un nodo específico para mantener la propiedad de maximo.
         while (i * 2) <= self.tamanio:
-            mc = self.encontrarMinHijo(i)  # Encuentra el hijo con máxima prioridad.
+            mc = self.encontrarMaxHijo(i)  # Encuentra el hijo con máxima prioridad.
             if self.listaMonticulo[i][0] < self.listaMonticulo[mc][0]:  # Compara con el hijo de máxima prioridad.
                 self.listaMonticulo[i], self.listaMonticulo[mc] = self.listaMonticulo[mc], self.listaMonticulo[i]  # Intercambia si es necesario.
             i = mc  # Se mueve hacia el hijo.
 
-    def encontrarMinHijo(self, i):
+    def encontrarMaxHijo(self, i):
         # Encuentra el hijo con máxima prioridad del nodo en la posición 'i'.
         if i * 2 + 1 > self.tamanio:
             return i * 2  # Si solo hay un hijo, lo devuelve.

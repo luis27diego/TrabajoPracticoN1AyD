@@ -21,9 +21,6 @@ class Vertice:
     def obtenerDistancia(self):
         return self.distancia
 
-    def obtnervecinosenlista(self):
-        return list(self.conectadoA.keys())
-
     def asignarDistancia(self, distancia):
         self.distancia = distancia
 

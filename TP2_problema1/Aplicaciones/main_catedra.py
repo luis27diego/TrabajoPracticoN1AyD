@@ -29,7 +29,7 @@ for i in range(n):
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.ateneder()
+        paciente_atendido = cola_de_espera.atender()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)

@@ -25,7 +25,7 @@ for i in range(n):
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.ateneder()
+        paciente_atendido = cola_de_espera.atender()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
@@ -48,7 +48,7 @@ for i in range(n):
 # Una vez que no ingresen más pacientes, atender a todos los pacientes restantes en la fila de espera
 print('No se ingresarán más pacientes. Atendiendo a los pacientes restantes...')
 while len(cola_de_espera) > 0:
-    paciente_atendido = cola_de_espera.ateneder()
+    paciente_atendido = cola_de_espera.atender()
     print('*'*40)
     print('Se atiende el paciente:', paciente_atendido)
     print('*'*40)

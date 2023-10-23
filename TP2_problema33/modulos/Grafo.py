@@ -1,5 +1,5 @@
 from TP2_problema33.modulos.Vertice import Vertice
-from TP2_problema33.modulos.Dijkstra import dijkstra_cuello_botella, camino_dijkstra__o
+from TP2_problema33.modulos.Dijkstra import dijkstra_cuello_botella, camino_dijkstra
 
 class Grafo:
     def __init__(self):
@@ -44,7 +44,7 @@ class Grafo:
         dijkstra_cuello_botella(self, inicio, final)
         
         # Obtiene el valor del cuello de botella calculado en el paso anterior.
-        cuello = camino_dijkstra__o(self, inicio, final)[1]
+        cuello = camino_dijkstra(self, inicio, final)[1]
         
         # Crea un nuevo grafo vacío.
         grafo = Grafo()
@@ -118,7 +118,7 @@ class Grafo:
                 if cuello_de_botella < cuello[0]:
                     # Si el cuello de botella actual es menor que el registrado anteriormente.
                     cuello = (cuello_de_botella, "camino " + str(contador),
-                            "La ruta con mayor capacidad de carga:", [i.obtenerId() for i in camino],
+                            "La ruta:", [i.obtenerId() for i in camino],
                             "el cuello de botella se presenta de " + camino[i].obtenerId() + " a " + vecino.obtenerId())
                     # Actualiza el cuello de botella con la nueva información.
 
@@ -137,6 +137,7 @@ class Grafo:
             tabla_ver.append(x)
         return tabla_ver   
     
+# Este metodo emplea el algortimo de Búsqueda en profundidad o tambien conocida como busqueda exhaustiva, pero con ciertas modificanciones
     def encontrar_caminos_posibles_str(self, inicio, final):
         res = []  # Inicializa una lista para almacenar los caminos encontrados.
         camino = [inicio]  # Inicializa una lista para representar el camino actual, empezando desde el vértice de inicio.
@@ -161,4 +162,6 @@ class Grafo:
             copia.append(act)  # Agrega el vecino al camino copiado.
             encontrar_caminos(act, final, copia, res)  # Llama a la función recursiva para encontrar caminos desde el vecino al final.
         return res  # Retorna la lista de caminos encontrados.
+    
+
 

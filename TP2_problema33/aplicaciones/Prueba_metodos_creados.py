@@ -1,6 +1,5 @@
-import time
 from TP2_problema33.modulos.Grafo import Grafo
-from TP2_problema33.modulos.Dijkstra import dijkstra, dijkstra_cuello_botella, camino_dijkstra__o
+from TP2_problema33.modulos.Dijkstra import dijkstra, dijkstra_cuello_botella, camino_dijkstra
 
 mi_grafo = Grafo()
 
@@ -24,7 +23,7 @@ print("Cálculo del cuello de botella con Dijkstra modificado")
 dijkstra_cuello_botella(mi_grafo, inicio, final)
 
 print("\nCuello de botella máximo encontrado:")
-cuello_maximo = camino_dijkstra__o(mi_grafo, inicio, final)
+cuello_maximo = camino_dijkstra(mi_grafo, inicio, final)
 print("Camino:", cuello_maximo[0])
 print("Cuello de botella máximo:", cuello_maximo[1])
 
@@ -52,7 +51,7 @@ grafiño = mi_grafo.crear_grafo_de_rutas_posibles(inicio.id, final.id, peso_dese
 dijkstra(grafiño, inicio)
 
 print("Camino menos costoso que pueda transportar un peso de", peso_deseado, "desde", inicio.id, "hasta", final.id)
-camino_menos_costoso = camino_dijkstra__o(grafiño, inicio, final)
+camino_menos_costoso = camino_dijkstra(grafiño, inicio, final)
 print("Camino:", camino_menos_costoso[0])
 print("Costo total del camino:", camino_menos_costoso[1])
 
@@ -63,8 +62,8 @@ print()
 grafo_ruta_barata_max_peso = mi_grafo.crear_grafo_de_rutas_posibles_peso_max(inicio, final)
 dijkstra(grafo_ruta_barata_max_peso, inicio)
 
-# Llamar a la función 'camino_dijkstra__o' para encontrar el camino resultante
-camino_resultante = camino_dijkstra__o(grafo_ruta_barata_max_peso, inicio, final)
+# Llamar a la función 'camino_dijkstra' para encontrar el camino resultante
+camino_resultante = camino_dijkstra(grafo_ruta_barata_max_peso, inicio, final)
 
 print("Camino más barato con peso máximo de", cuello_maximo[1])
 print("Camino:", camino_resultante[0])

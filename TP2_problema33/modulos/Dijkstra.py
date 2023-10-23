@@ -58,7 +58,7 @@ def dijkstra_cuello_botella(unGrafo, inicio, final):
     cp.construirMonticulo([(v.obtenerDistancia(), v) for v in unGrafo])
 
     while not cp.estaVacia():
-        verticeActual = cp.eliminarMin()
+        verticeActual = cp.eliminarMax()
 
         for verticeSiguiente in verticeActual.obtenerConexiones():
             # Obtener la distancia actual desde el vértice de inicio al vértice actual.
@@ -94,10 +94,10 @@ def dijkstra_cuello_botella(unGrafo, inicio, final):
 # *******************************************************************************************************************************************
 #METODO PARA RECORRER DESDE VERTICE FINAL HASTA SUS PREDECESORES (CONTRUIR EL CAMINO)
 
-def camino_dijkstra__o(self, inicio, final):
+def camino_dijkstra(unGrafo, inicio, final):
     camino = []  # Lista para almacenar el camino desde 'a' hasta 'b'.
-    x = self.obtenerVertice(final.id)  # Obtener el vértice 'b'.
-    actual = x  # Inicializar el vértice actual como 'b'.
+    Vfinal = unGrafo.obtenerVertice(final.id)  # Obtener el vértice 'b'.
+    actual = Vfinal  # Inicializar el vértice actual como 'b'.
 
     while actual is not None:
         # Insertar el vértice actual al principio de la lista 'camino'.
@@ -106,11 +106,9 @@ def camino_dijkstra__o(self, inicio, final):
         # Si el vértice 'a' es igual al vértice actual, hemos llegado al origen.
         if inicio == actual:
             # Retornar el camino y la distancia acumulada hasta 'a'.
-            return [camino, x.distancia]
+            return [camino, Vfinal.distancia]
 
         # Mover al vértice predecesor en el camino más corto.
         actual = actual.predecesor
 
-    # Si no se llega a 'a', retornar el camino y la distancia acumulada hasta 'b'.
-    x = self.obtenerVertice(final.id)
-    return [camino, x.distancia]
+    return [camino, Vfinal.distancia]
